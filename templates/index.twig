@@ -1,0 +1,19 @@
+{# index.twig #}
+{% extends 'layout.twig' %}
+
+{% block body %}
+<h1>非ログイン TopPage</h1>
+
+<h2>ログイン</h2>
+<form action="./top.html" method="POST">
+email: <input><br>
+パスワード: <input><br>
+<button>ログイン</button>
+</form>
+
+<a href="./password_reset.html">パスワードを忘れた方はこちら</a>
+
+<h2>会員登録</h2>
+
+<a href="./register.php">会員登録はこちら</a>
+{% endblock %}

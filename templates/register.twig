@@ -1,0 +1,20 @@
+{# register.twig #}
+{% extends 'layout.twig' %}
+
+{% block body %}
+<h1>会員登録</h1>
+{% if error_messages|length  %}
+エラー<br>
+  {% for k, v in error_messages %}
+    {{ v }}<br>
+  {% endfor %}
+{% endif %}
+
+<form  action="./register_fin.php" method="POST">
+表示名:<input name="name" value="{{ data.name }}"><br>
+email:<input name="email" value="{{ data.email }}"><br>
+パスワード:<input  name="password" type="password" ><br>
+パスワード(確認):<input name="password2" type="password" ><br>
+<button>登録</button>
+</form>
+{% endblock %}

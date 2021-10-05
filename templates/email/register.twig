@@ -1,0 +1,12 @@
+{#  register.twig  #}
+例１）「よりセキュア」なmail
+以下のアクティベーションコードを画面( https://ドメイン/register_fin_print.php
+ )に入力して、emailの認証を完了させてください。
+
+{{ activation_token }}
+
+-------------------------------
+例2) 「よくあるタイプ」のmail
+以下のURLをクリックして、emailの認証を完了させてください。
+
+https://ドメイン/register_activation.php?token={{ activation_token | e('url') }}

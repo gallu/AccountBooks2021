@@ -1,0 +1,18 @@
+{# register_fin_print.twig #}
+{% extends 'layout.twig' %}
+
+{% block body %}
+<h1>登録完了</h1>
+登録あざした!!<br>
+メールみてアクティベーションしてください!!<br>
+<hr>
+アクティベーション<br>
+<form action="./register_activation.php" method="post">
+emailから送られたトークン <input name="token"><br>
+<button>認証する</button>
+</form>
+
+
+
+<a href="./index.php">Topはこちら</a>
+{% endblock %}
