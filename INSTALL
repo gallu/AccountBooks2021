@@ -1,0 +1,17 @@
+# composer
+
+```
+composer.phar install
+```
+
+# config
+
+```
+ln -s ./environment_dev.config environment.config
+```
+
+# DocumentRoot
+
+```
+ln -s ~/AccountBooks2021/public ~/wwwroot/AccountBooks2021
+```
