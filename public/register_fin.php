@@ -48,6 +48,11 @@ if ($data['password'] !== $data['password2']) {
 }
 //var_dump($error_messages);
 
+// CSRF tokenのチェック
+if (false === Csrf::isValid()) {
+    $error_messages[] = '不正な遷移です';
+}
+
 // エラーがあったら入力ページに戻す
 if ([] !== $error_messages) {
     $_SESSION['flash']['data'] = $data;

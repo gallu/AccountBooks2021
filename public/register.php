@@ -12,11 +12,16 @@ $error_messages = $_SESSION['flash']['error_messages'] ?? [];
 // セッションの情報は削除する
 unset( $_SESSION['flash'] );
 
+// CSRF用のtokenを作成してセッションに仕込む
+$csrf_token = Csrf::createToken();
+
 //
 $template_filename = 'register.twig';
 $context = [
     'data' => $data,
     'error_messages' => $error_messages,
+    // CSRF用
+    'csrf_token' => $csrf_token,
 ];
 
 // 出力

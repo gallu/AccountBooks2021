@@ -8,6 +8,8 @@ require_once(BASEPATH . '/libs/ModelBase.php');
 class TestModel extends ModelBase {
     protected static $table_name = 'test';
     protected static $primary_key = 'test_id';
+    //
+    protected static $auto_increment = true;
 }
 
 // selectのテスト
@@ -17,7 +19,13 @@ var_dump($obj->i);
 //var_dump($obj->hoge);
 
 // insertのテスト
-$obj = TestModel::create(['s' => 'ModelTest', 'i' => 1234, 'hoge_foo1' => 123, " ';-- 1=1" => null]);
+$obj = TestModel::create(['s' => 'ModelTest', 'i' => 1234]);
+var_dump($obj);
 
+// updateのテスト
+$obj->i = 9999;
+$obj->s = 'ModelTestUpdate';
+$obj->update();
+var_dump($obj);
 
 

@@ -1,0 +1,76 @@
+{#  top.twig  #}
+{% extends 'layout.twig' %}
+
+{% block body %}
+<a href="./logout.php">ログアウト</a><br>
+<hr>
+<h1>出納帳</h1>
+{% if deposit.success == true %}入金の入力ができました!!<br>{% endif %}
+{% if withdrawal.success == true %}出金の入力ができました!!<br>{% endif %}
+
+<h2>入金</h2>
+(お金が入ってきた)<br>
+{% if deposit.error == true %}入金の入力でエラーがあったよ？<br>{% endif %}
+<form action="./deposit.php" method="POST">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+日付<input name="account_date" type="date" value="{{deposit.account_date}}"><br>
+科目<input name="accounting_subject" value="{{deposit.accounting_subject}}"><br>
+金額<input name="amount" value="{{deposit.amount}}"><br>
+<button>入力</button>
+</form>
+
+<h2>出金</h2>
+(お金を使った)<br>
+{% if withdrawal.error == true %}出金の入力でエラーがあったよ？<br>{% endif %}
+<form action="./withdrawal.php" method="POST">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+日付<input name="account_date" type="date" value="{{withdrawal.account_date}}"><br>
+科目<input name="accounting_subject" value="{{withdrawal.accounting_subject}}"><br>
+金額<input name="amount" value="{{withdrawal.amount}}"><br>
+<button>入力</button>
+</form>
+
+<h2>表</h2>
+入金合計：{{ deposit_total | number_format }}円<br>
+出金合計：{{ withdrawal_total | number_format }}円<br>
+<hr>
+<h3>検索</h3>
+<form action="./top.php" method="get">
+    日付: <input type="date" name="from_date" value="{{ from_date }}">
+          ～<input type="date" name="to_date" value="{{ to_date }}"><br>
+    科目名(部分一致)<input name="accounting_subject_search" value={{ accounting_subject_search }}><br>
+    入出金: <label><input type="checkbox" name="flag_search[]" value="1" {% if '1' in flag_search %}checked{% endif %}>入金</label>
+          / <label><input type="checkbox" name="flag_search[]" value="2" {% if '2' in flag_search %}checked{% endif %}>出金</label><br>
+    <button>検索する</button>
+</form>
+<hr>
+<a href="./top.php?p=1&{{ search_string_e|raw }}">最初に戻る</a><br>
+
+{% if 0 != before_page %}<a href="./top.php?p={{ before_page|e('url') }}&{{ search_string_e|raw }}&sort={{ sort|e('url') }}">前へ</a>{% endif %}
+ | 
+{% if 0 != next_page %}<a href="./top.php?p={{ next_page|e('url') }}&{{ search_string_e|raw }}&sort={{ sort|e('url') }}">次へ</a>{% endif %}<br>
+<table border="1">
+<tr>
+  <th>id
+  <th>入出金
+  <th>日付<a href="./top.php?p={{ now_page|e('url') }}&{{ search_string_e|raw }}&sort=date">▲</a>
+          <a href="./top.php?p={{ now_page|e('url') }}&{{ search_string_e|raw }}&sort=date_desc">▼</a>
+  <th>科目<a href="./top.php?p={{ now_page|e('url') }}&{{ search_string_e|raw }}&sort=subject">▲</a>
+          <a href="./top.php?p={{ now_page|e('url') }}&{{ search_string_e|raw }}&sort=subject_desc">▼</a>
+  <th>金額<a href="./top.php?p={{ now_page|e('url') }}&{{ search_string_e|raw }}&sort=amount">▲</a>
+          <a href="./top.php?p={{ now_page|e('url') }}&{{ search_string_e|raw }}&sort=amount_desc">▼</a>
+{% for key, val in list %}
+<tr>
+  <td>{{ val.account_id }}
+  <td>{% if val.flag == 1 %}入金{% else %}出金{% endif %}
+  <td>{{ val.account_date }}
+  <td>{{ val.accounting_subject }}
+  <td>{{ val.amount | number_format }}円
+{% endfor %}
+</table>
+
+{% endblock %}
+
+
+
+

@@ -5,9 +5,11 @@
 <h1>非ログイン TopPage</h1>
 
 <h2>ログイン</h2>
-<form action="./top.html" method="POST">
-email: <input><br>
-パスワード: <input><br>
+{% if login_error == true %}<div>ログインでエラーが発生しました</div>{% endif %}
+<form action="./login.php" method="POST">
+email: <input name="email" value="{{login_email}}"><br>
+パスワード: <input name="pw" type="password"><br>
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
 <button>ログイン</button>
 </form>
 
